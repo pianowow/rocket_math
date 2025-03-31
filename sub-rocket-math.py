@@ -42,7 +42,8 @@ def do_it(stdscr):
     max_line, max_col = curses.LINES-1, curses.COLS-1
     w_title_bar = curses.newwin(1,max_col,0,0) #height, width, starty, startx
     w_title_bar.bkgd(' ', curses.color_pair(1))
-    w_instruction = curses.newwin(1,max_col,1,0)
+    w_mode = curses.newwin(1,max_col,1,0)
+    w_mode.bkgd(' ', curses.color_pair(3))
     w_question = curses.newwin(3,max_col,3,0)
     w_question.bkgd(' ', curses.color_pair(2))
     w_answer = curses.newwin(1,max_col,6,0)
@@ -57,16 +58,22 @@ def do_it(stdscr):
 
     win_print(w_title_bar, "Subtraction Rocket Math by Chris Irwin and Olivia Irwin, 2025", 1)
 
-    win_print(w_question, "Would you like a fixed number of Seconds or a fixed number of Questions?\ns for seconds, q for questions", 2)
+    win_print(w_question, "Would you like a fixed number of Seconds or a fixed number of Questions?", 2)
+    win_print(w_hints, "s for seconds, q for questions", 1)
     mode = w_answer.getstr().decode()
     w_answer.clear()
+    w_answer.refresh()
+    w_hints.clear()
+    w_hints.refresh()
     
     q_limit,s_limit=-1,-1
     if mode == 'q':
+        win_print(w_mode, "Question Mode Engaged", 3)
         win_print(w_question, "How many questions would you like?", 2)
         q_limit = int(w_answer.getstr(0,0))
         w_answer.clear()
     elif mode == 's':
+        win_print(w_mode, "Seconds Mode Engaged", 3)
         win_print(w_question, "How many seconds would you like?", 2)
         s_limit = int(w_answer.getstr(0,0)) 
         w_answer.clear()
