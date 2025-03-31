@@ -3,7 +3,6 @@
 # written by Chris and Olivia Irwin, 2025
 # TODO: 
 #       - print total time taken at the end
-#       - give the option to do a fixed time length instead of fixed number of problems
 #          - display a countdown timer for when a fixed time is chosen, depends on 3
 #       - display a stopwatch timer for when a fixed number of problems is chosen
 #       - combined operations, +, -, x, ➗
