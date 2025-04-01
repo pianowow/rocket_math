@@ -2,10 +2,9 @@
 
 # written by Chris and Olivia Irwin, 2025
 # TODO: 
-#       - print total time taken at the end
-#          - display a countdown timer for when a fixed time is chosen, depends on 3
+#       - display a countdown timer for when a fixed time is chosen
 #       - display a stopwatch timer for when a fixed number of problems is chosen
-#       - combined operations, +, -, x, ➗
+#       - combined operations, +, -, x, ÷
 
 from random import random
 from math import floor
@@ -128,7 +127,7 @@ def do_it(stdscr):
             else:
                 win_print(w_feedback,"Opps!  {} seconds".format(seconds), 1)
                 writer.writerow([seconds,x[2],x[1],user_input,'N'])
-            win_print(w_summary, "You got {} right out of {} questions! {}%".format(score,q_ans,int(score/(q_ans)*100)), 1)
+            win_print(w_summary, "You got {} right out of {} questions! {}% in {} seconds".format(score,q_ans,int(score/(q_ans)*100), round(s_passed,1)), 1)
     w_hints.clear()
     w_hints.refresh()
     win_print(w_question, "Press any key to quit... ", 2)
