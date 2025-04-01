@@ -4,7 +4,8 @@
 # TODO: 
 #       - display a countdown timer for when a fixed time is chosen
 #       - display a stopwatch timer for when a fixed number of problems is chosen
-#       - combined operations, +, -, x, ÷
+#       - combined operations: +, - 
+#       - third grade math: x, ÷
 
 from random import random
 from math import floor
