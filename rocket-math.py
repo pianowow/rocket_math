@@ -4,7 +4,6 @@
 # TODO: 
 #       - display a countdown timer for when a fixed time is chosen
 #       - display a stopwatch timer for when a fixed number of problems is chosen
-#       - third grade math: x, ÷
 
 from random import random
 from math import floor
@@ -31,7 +30,18 @@ def new_question(operation):
         x[0] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
         x[2] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
         x[3] = x[0] + x[2]
+    elif operation == 'm':
+        x[1] = 'x'
+        x[0] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
+        x[2] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
+        x[3] = x[0] * x[2]
+    elif operation =='d':
+        x[1] = '÷'
+        x[2] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
+        x[3] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
+        x[0] = x[2] * x[3]
     else:
+
         sys.exit()
     return x
 
@@ -79,7 +89,7 @@ def do_it(stdscr):
        sys.exit()
         
     win_print(w_question, "Which operation would you like?", 2)
-    win_print(w_hints, "a for addition, s for subtraction", 1)
+    win_print(w_hints, "a for addition, s for subtraction, m for multiplication, d for division", 1)
     op_code = w_answer.getstr().decode().lower()
     w_answer.clear()
     w_answer.refresh()
