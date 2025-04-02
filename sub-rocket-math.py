@@ -120,7 +120,7 @@ def do_it(stdscr):
             e_time = time() 
             s_passed = s_passed + e_time - s_time
             q_ans = q_ans + 1
-            seconds = round(e_time-s_time)
+            seconds = round(e_time-s_time,1)
             if (user_input_int == x[0] ):
                 score += 1
                 win_print(w_feedback,"Answered correctly in {} seconds".format(seconds), 1)
