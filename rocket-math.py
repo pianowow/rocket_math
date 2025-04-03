@@ -22,24 +22,24 @@ def new_question(operation):
     if operation == 's':
         #make numbers such that x[0]-x[2]=x[3]
         x[1] = '-'
-        x[2] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
-        x[3] = floor(random()*9)+1  
+        x[2] = floor(random()*9)+1
+        x[3] = floor(random()*9)+1
         x[0] = x[2] + x[3]
     elif operation == 'a':
         #make numbers such that x[0]+x[2]=x[3]
         x[1] = '+'
-        x[0] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
-        x[2] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
+        x[0] = floor(random()*9)+1
+        x[2] = floor(random()*9)+1
         x[3] = x[0] + x[2]
     elif operation == 'm':
         x[1] = 'x'
-        x[0] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
-        x[2] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
+        x[0] = floor(random()*9)+1
+        x[2] = floor(random()*9)+1
         x[3] = x[0] * x[2]
     elif operation =='d':
         x[1] = '÷'
-        x[2] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
-        x[3] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
+        x[2] = floor(random()*9)+1
+        x[3] = floor(random()*9)+1
         x[0] = x[2] * x[3]
     else:
         sys.exit()
