@@ -13,7 +13,7 @@ import curses
 import csv 
 import sys 
 
-file_path='/home/apollo/Documents/Olivia-rocket-math.csv'
+file_path='~/Documents/rocket-math.csv'
 
 #problem space here is defined by types of questions in "Rocket Math" homework 
 def new_question(operation):
@@ -41,7 +41,6 @@ def new_question(operation):
         x[3] = floor(random()*9)+1  #maybe 0 should be allowed for x[1] 
         x[0] = x[2] * x[3]
     else:
-
         sys.exit()
     return x
 
@@ -51,8 +50,6 @@ def win_print(win, msg, color):
     win.refresh()
 
 def do_it(stdscr):
-    # Create a custom color set that you might re-use frequently
-    # Assign it a number (1-255), a foreground, and background color.
     curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_BLUE)
     curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_BLACK)
     curses.init_pair(3, curses.COLOR_BLUE, curses.COLOR_BLACK)
