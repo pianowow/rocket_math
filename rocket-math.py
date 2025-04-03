@@ -8,12 +8,13 @@
 from random import random
 from math import floor
 from time import time
+from pathlib import Path
 import datetime
 import curses
 import csv 
 import sys 
 
-file_path='~/Documents/rocket-math.csv'
+file_path = Path.home() / 'Documents' / 'rocket-math.csv'
 
 #problem space here is defined by types of questions in "Rocket Math" homework 
 def new_question(operation):
