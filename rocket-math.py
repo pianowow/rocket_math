@@ -33,8 +33,8 @@ def new_question(operation):
         x[3] = x[0] + x[2]
     elif operation == 'm':
         x[1] = 'x'
-        x[0] = floor(random()*9)+1
-        x[2] = floor(random()*9)+1
+        x[0] = floor(random()*8)+2
+        x[2] = floor(random()*8)+2
         x[3] = x[0] * x[2]
     elif operation =='d':
         x[1] = '÷'
