@@ -110,9 +110,8 @@ def do_it(stdscr):
     s_passed=0
 
     with open(file_path,'a') as f:
-        fieldnames = ['seconds','num1','op','num2','answer','correct']
+        fieldnames = ['time','seconds','num1','op','num2','answer','correct']
         writer = csv.writer(f)    
-        writer.writerow(['Started program',datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S')])
         writer.writerow(fieldnames)
         score = 0
         while s_passed < s_limit or q_ans < q_limit:  
@@ -149,10 +148,10 @@ def do_it(stdscr):
             if (user_input_int == x[3] ):
                 score += 1
                 win_print(w_feedback,"Answered correctly in {} seconds".format(seconds), 1)
-                writer.writerow([seconds,x[0],x[1],x[2],user_input,'Y'])
+                writer.writerow([datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S'),seconds,x[0],x[1],x[2],user_input,'Y'])
             else:
                 win_print(w_feedback,"Opps!  {} seconds".format(seconds), 1)
-                writer.writerow([seconds,x[0],x[1],x[2],user_input,'N'])
+                writer.writerow([datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S'),seconds,x[0],x[1],x[2],user_input,'N'])
             win_print(w_summary, "You got {} right out of {} questions! {}% in {} seconds".format(score,q_ans,int(score/(q_ans)*100), round(s_passed,1)), 1)
     w_hints.clear()
     w_hints.refresh()
