@@ -2,8 +2,7 @@
 
 # written by Chris and Olivia Irwin, 2025
 # TODO: 
-#       - display a countdown timer for when a fixed time is chosen
-#       - display a stopwatch timer for when a fixed number of problems is chosen
+#       implement a personalized mode to ask questions answered incorrectly, or ones where the time taken was long 
 
 from random import random
 from math import floor
