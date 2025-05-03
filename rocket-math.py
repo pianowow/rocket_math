@@ -37,8 +37,8 @@ def new_question(operation):
         x[3] = x[0] * x[2]
     elif operation =='d':
         x[1] = '÷'
-        x[2] = floor(random()*9)+1
-        x[3] = floor(random()*9)+1
+        x[2] = floor(random()*8)+2
+        x[3] = floor(random()*8)+2
         x[0] = x[2] * x[3]
     else:
         sys.exit()
