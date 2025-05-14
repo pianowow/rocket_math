@@ -16,6 +16,7 @@ import datetime
 import curses
 import csv 
 import sys 
+import time
 
 file_path = Path.home() / 'Documents' / 'rocket-math.csv'
 
@@ -109,17 +110,17 @@ def do_it(stdscr):
         
     win_print(w_hints, "Type q to quit and p to pause the practice.", 1)
 
-    q_ans=0
-    s_passed=0
+    questions_answered=0
+    seconds_passed=0
 
     with open(file_path,'a') as f:
         fieldnames = ['time','seconds','num1','op','num2','answer','correct']
         writer = csv.writer(f)    
         writer.writerow(fieldnames)
         score = 0
-        while s_passed < s_limit or q_ans < q_limit:  
+        while seconds_passed < s_limit or questions_answered < q_limit:  
             x = new_question(op_code)
-            win_print(w_question, "Question {}\n{} {} {} =".format(q_ans+1,x[0],x[1],x[2]), 2)
+            win_print(w_question, "Question {}\n{} {} {} =".format(questions_answered+1,x[0],x[1],x[2]), 2)
             s_time = time()
             user_input_int = -1
             while user_input_int == -1: 
@@ -136,7 +137,7 @@ def do_it(stdscr):
                         w_answer.clear()
                         w_answer.refresh()
                         x = new_question(op_code)
-                        win_print(w_question, "Question {}\n{} {} {} =".format(q_ans+1,x[0],x[1],x[2]), 2)
+                        win_print(w_question, "Question {}\n{} {} {} =".format(questions_answered+1,x[0],x[1],x[2]), 2)
                         s_time = time()
                         continue
                     user_input_int = int(user_input)
@@ -145,8 +146,8 @@ def do_it(stdscr):
                 except ValueError: #shouldn't mark a question wrong because the user mistyped
                     win_print(w_feedback, "Oops, that doesn't look like a number", 1)
             e_time = time() 
-            s_passed = s_passed + e_time - s_time
-            q_ans = q_ans + 1
+            seconds_passed = s_passed + e_time - s_time
+            questions_answered = q_ans + 1
             seconds = round(e_time-s_time,1)
             if (user_input_int == x[3] ):
                 score += 1
@@ -155,7 +156,7 @@ def do_it(stdscr):
             else:
                 win_print(w_feedback,"Opps!  {} seconds".format(seconds), 1)
                 writer.writerow([datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S'),seconds,x[0],x[1],x[2],user_input,'N'])
-            win_print(w_summary, "You got {} right out of {} questions! {}% in {} seconds".format(score,q_ans,int(score/(q_ans)*100), round(s_passed,1)), 1)
+            win_print(w_summary, "You got {} right out of {} questions! {}% in {} seconds".format(score,questions_answered,int(score/(q_ans)*100), round(seconds_passed,1)), 1)
     w_hints.clear()
     w_hints.refresh()
     win_print(w_question, "Press any key to quit... ", 2)
