@@ -3,6 +3,10 @@
 # written by Chris and Olivia Irwin, 2025
 # TODO: 
 #       implement a personalized mode to ask questions answered incorrectly, or ones where the time taken was long 
+#       remove the questions at the beginning, implementing commandline arguments instead
+#           default question (-q) vs seconds (-s)
+#           only required arguments are operation (a,s,m,d) and number of questions/seconds
+#       countdown timer to start things off
 
 from random import random
 from math import floor
