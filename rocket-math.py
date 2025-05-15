@@ -3,9 +3,6 @@
 # written by Chris and Olivia Irwin, 2025
 # TODO: 
 #       implement a personalized mode to ask questions answered incorrectly, or ones where the time taken was long 
-#       remove the questions at the beginning, implementing commandline arguments instead
-#           default question (-q) vs seconds (-s)
-#           only required arguments are operation (a,s,m,d) and number of questions/seconds
 
 from random import random
 from math import floor
@@ -15,6 +12,13 @@ import datetime
 import curses
 import csv 
 import sys 
+import argparse
+
+parser = argparse.ArgumentParser(prog='rocket-math.py')
+parser.add_argument('-s','--seconds',action='store_true', help='fixed seconds mode')
+parser.add_argument('operation', help='operation (a,s,m,d)')
+parser.add_argument('number', help='number of questions/seconds')
+args = parser.parse_args()
 
 file_path = Path.home() / 'Documents' / 'rocket-math.csv'
 
@@ -76,35 +80,19 @@ def do_it(stdscr):
     w_hints.bkgd(' ', curses.color_pair(1))
 
     win_print(w_title_bar, "Rocket Math by Chris Irwin and Olivia Irwin, 2025", 1)
-    win_print(w_question, "Would you like a fixed number of Seconds or a fixed number of Questions?", 2)
-    win_print(w_hints, "s for seconds, q for questions", 1)
-    mode = w_answer.getstr().decode().lower()
-    w_answer.clear()
-    w_answer.refresh()
+    mode = 's' if args.seconds else 'q'
     if mode == 'q':
         win_print(w_mode, "Question Mode Engaged", 3)
     elif mode == 's':
         win_print(w_mode, "Seconds Mode Engaged", 3)
-    else:
-       sys.exit()
         
-    win_print(w_question, "Which operation would you like?", 2)
-    win_print(w_hints, "a for addition, s for subtraction, m for multiplication, d for division", 1)
-    op_code = w_answer.getstr().decode().lower()
-    w_answer.clear()
-    w_answer.refresh()
-    w_hints.clear()
-    w_hints.refresh()    
+    op_code = args.operation
 
     q_limit,s_limit=-1,-1
     if mode == 'q':
-        win_print(w_question, "How many questions would you like?", 2)
-        q_limit = int(w_answer.getstr(0,0))
-        w_answer.clear()
+        q_limit = int(args.number)
     elif mode == 's':
-        win_print(w_question, "How many seconds would you like?", 2)
-        s_limit = int(w_answer.getstr(0,0)) 
-        w_answer.clear()
+        s_limit = int(args.number) 
         
     win_print(w_hints, "Type q to quit and p to pause the practice.", 1)
     win_print(w_answer,"",2)
