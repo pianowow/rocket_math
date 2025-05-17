@@ -16,8 +16,8 @@ import argparse
 
 parser = argparse.ArgumentParser(prog='rocket-math.py')
 parser.add_argument('-s','--seconds',action='store_true', help='fixed seconds mode')
-parser.add_argument('operation', help='operation (a,s,m,d)')
-parser.add_argument('number', help='number of questions/seconds')
+parser.add_argument('operation', help='operation (a,s,m,d)', nargs='?', default='m')
+parser.add_argument('number', help='number of questions/seconds', nargs='?', default='50')
 args = parser.parse_args()
 
 file_path = Path.home() / 'Documents' / 'rocket-math.csv'
@@ -94,13 +94,13 @@ def do_it(stdscr):
     elif mode == 's':
         s_limit = int(args.number) 
         
-    win_print(w_hints, "Type q to quit and p to pause the practice.", 1)
+    win_print(w_hints, "a,s,m,d to change operation, p to pause, q to quit", 1)
     win_print(w_answer,"",2)
     questions_answered=0
     seconds_passed=0
 
     with open(file_path,'a') as f:
-        fieldnames = ['time','seconds','num1','op','num2','answer','correct']
+        fieldnames = ["time","seconds","num1","op","num2","answer","correct"]
         writer = csv.writer(f)    
         writer.writerow(fieldnames)
         score = 0
@@ -119,34 +119,33 @@ def do_it(stdscr):
                     user_input = w_answer.getstr(0,0).decode() 
                     w_answer.clear()
                     w_answer.refresh()
-                    if user_input == "q":
+                    if user_input.lower() == "q":
                         sys.exit()
-                    elif user_input == "p":
+                    elif user_input.lower() in ["a","s","m","d"]:
+                        op_code = user_input.lower()
+                        break
+                    elif user_input.lower() == "p":
                         win_print(w_question, "Timer is paused.  Press any key to continue...", 2) 
                         w_answer.getch(0,0)
                         w_answer.clear()
                         w_answer.refresh()
-                        x = new_question(op_code)
-                        win_print(w_question, "Question {}\n{} {} {} =".format(questions_answered+1,x[0],x[1],x[2]), 2)
-                        s_time = time.time()
-                        continue
+                        break
                     user_input_int = int(user_input)
-                except SystemExit:
-                    raise
                 except ValueError: #shouldn't mark a question wrong because the user mistyped
                     win_print(w_feedback, "Oops, that doesn't look like a number", 1)
-            e_time = time.time() 
-            seconds_passed = seconds_passed + e_time - s_time
-            questions_answered = questions_answered + 1
-            seconds = round(e_time-s_time,1)
-            if (user_input_int == x[3] ):
-                score += 1
-                win_print(w_feedback,"Answered correctly in {} seconds".format(seconds), 1)
-                writer.writerow([datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S'),seconds,x[0],x[1],x[2],user_input,'Y'])
-            else:
-                win_print(w_feedback,"Opps!  {} seconds".format(seconds), 1)
-                writer.writerow([datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S'),seconds,x[0],x[1],x[2],user_input,'N'])
-            win_print(w_summary, "You got {} right out of {} questions! {}% in {} seconds".format(score,questions_answered,int(score/(questions_answered)*100), round(seconds_passed,1)), 1)
+            else: #only runs if the loop actually completes (not broken out of)
+                e_time = time.time() 
+                seconds_passed = seconds_passed + e_time - s_time
+                questions_answered = questions_answered + 1
+                seconds = round(e_time-s_time,1)
+                if (user_input_int == x[3] ):
+                    score += 1
+                    win_print(w_feedback,"Answered correctly in {} seconds".format(seconds), 1)
+                    writer.writerow([datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S'),seconds,x[0],x[1],x[2],user_input,'Y'])
+                else:
+                    win_print(w_feedback,"Opps!  {} seconds".format(seconds), 1)
+                    writer.writerow([datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S'),seconds,x[0],x[1],x[2],user_input,'N'])
+                win_print(w_summary, "You got {} right out of {}/{} questions! {}% in {} seconds".format(score,questions_answered,q_limit,int(score/(questions_answered)*100), round(seconds_passed,1)), 1)
     w_hints.clear()
     w_hints.refresh()
     win_print(w_question, "Press any key to quit... ", 2)
