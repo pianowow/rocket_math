@@ -13,6 +13,7 @@ import curses
 import csv 
 import sys 
 import argparse
+import os
 
 parser = argparse.ArgumentParser(prog='rocket-math.py')
 parser.add_argument('-s','--seconds',action='store_true', help='fixed seconds mode')
@@ -98,11 +99,13 @@ def do_it(stdscr):
     win_print(w_answer,"",2)
     questions_answered=0
     seconds_passed=0
-
+    if not os.path.exists(file_path):
+        with open(file_path,'w') as f:
+            fieldnames = ["time","seconds","num1","op","num2","answer","correct"]
+            writer = csv.writer(f)    
+            writer.writerow(fieldnames)
     with open(file_path,'a') as f:
-        fieldnames = ["time","seconds","num1","op","num2","answer","correct"]
         writer = csv.writer(f)    
-        writer.writerow(fieldnames)
         score = 0
         #countdown
         for i in range(3,0,-1):
