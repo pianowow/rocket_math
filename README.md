@@ -8,7 +8,7 @@ A curses based terminal program to practice addition, subtraction, multiplicatio
 #### How to run
 ```
 ❯ ./rocket-math.py -h
-usage: rocket-math.py [-h] [-s] operation number
+usage: rocket-math.py [-h] [-s] [operation] [number]
 
 positional arguments:
   operation      operation (a,s,m,d)
@@ -20,11 +20,15 @@ options:
 ```
 #### Examples
 
-For 50 multiplication questions:
+For 50 multiplication questions (default):
 
-`❯ ./rocket-math.py m 50`
+`❯ ./rocket-math.py`
 
-For 60 seconds of as many addition questions as you can answer:
+For 50 subtraction questions:
 
-`❯ ./rocket-math.py -s a 60`
+`❯ ./rocket-math.py s`
+
+For 60 seconds of as many multiplication questions as you can answer:
+
+`❯ ./rocket-math.py -s m 60`
 
