@@ -117,22 +117,22 @@ def do_it(stdscr):
             s_time = time.time()
             user_input_int = -1
             while user_input_int == -1: 
-                try:
-                    #getstr returns bytes, which decode() turns into a string
-                    user_input = w_answer.getstr(0,0).decode() 
+                #getstr returns bytes, which decode() turns into a string
+                user_input = w_answer.getstr(0,0).decode() 
+                w_answer.clear()
+                w_answer.refresh()
+                if user_input.lower() == "q":
+                    sys.exit()
+                elif user_input.lower() in ["a","s","m","d"]:
+                    op_code = user_input.lower()
+                    break
+                elif user_input.lower() == "p":
+                    win_print(w_question, "Timer is paused.  Press any key to continue...", 2) 
+                    w_answer.getch(0,0)
                     w_answer.clear()
                     w_answer.refresh()
-                    if user_input.lower() == "q":
-                        sys.exit()
-                    elif user_input.lower() in ["a","s","m","d"]:
-                        op_code = user_input.lower()
-                        break
-                    elif user_input.lower() == "p":
-                        win_print(w_question, "Timer is paused.  Press any key to continue...", 2) 
-                        w_answer.getch(0,0)
-                        w_answer.clear()
-                        w_answer.refresh()
-                        break
+                    break
+                try:
                     user_input_int = int(user_input)
                 except ValueError: #shouldn't mark a question wrong because the user mistyped
                     win_print(w_feedback, "Oops, that doesn't look like a number", 1)
