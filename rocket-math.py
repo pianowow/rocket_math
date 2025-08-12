@@ -25,29 +25,29 @@ file_path = Path.home() / 'Documents' / 'rocket-math.csv'
 
 #problem space here is defined by types of questions in "Rocket Math" homework 
 def new_question(operation):
-    x = [0,0,0,0]
+    x = dict()
     if operation == 's':
-        #make numbers such that x[0]-x[2]=x[3]
-        x[1] = '-'
-        x[2] = floor(random()*9)+1
-        x[3] = floor(random()*9)+1
-        x[0] = x[2] + x[3]
+        #make numbers such that x['num1']-x['num2']=x['answer']
+        x['operation'] = '-'
+        x['num2'] = floor(random()*9)+1
+        x['answer'] = floor(random()*9)+1
+        x['num1'] = x['num2'] + x['answer']
     elif operation == 'a':
-        #make numbers such that x[0]+x[2]=x[3]
-        x[1] = '+'
-        x[0] = floor(random()*9)+1
-        x[2] = floor(random()*9)+1
-        x[3] = x[0] + x[2]
+        #make numbers such that x['num1']+x['num2']=x['answer']
+        x['operation'] = '+'
+        x['num1'] = floor(random()*9)+1
+        x['num2'] = floor(random()*9)+1
+        x['answer'] = x['num1'] + x['num2']
     elif operation == 'm':
-        x[1] = 'x'
-        x[0] = floor(random()*8)+2
-        x[2] = floor(random()*8)+2
-        x[3] = x[0] * x[2]
+        x['operation'] = 'x'
+        x['num1'] = floor(random()*8)+2
+        x['num2'] = floor(random()*8)+2
+        x['answer'] = x['num1'] * x['num2']
     elif operation =='d':
-        x[1] = '÷'
-        x[2] = floor(random()*8)+2
-        x[3] = floor(random()*8)+2
-        x[0] = x[2] * x[3]
+        x['operation'] = '÷'
+        x['num2'] = floor(random()*8)+2
+        x['answer'] = floor(random()*8)+2
+        x['num1'] = x['num2'] * x['answer']
     else:
         sys.exit()
     return x
@@ -113,7 +113,7 @@ def do_it(stdscr):
             time.sleep(1)
         while seconds_passed < s_limit or questions_answered < q_limit:  
             x = new_question(op_code)
-            win_print(w_question, "Question {}\n{} {} {} =".format(questions_answered+1,x[0],x[1],x[2]), 2)
+            win_print(w_question, "Question {}\n{} {} {} =".format(questions_answered+1,x['num1'],x['operation'],x['num2']), 2)
             s_time = time.time()
             user_input_int = -1
             while user_input_int == -1: 
@@ -141,13 +141,13 @@ def do_it(stdscr):
                 seconds_passed = seconds_passed + e_time - s_time
                 questions_answered = questions_answered + 1
                 seconds = round(e_time-s_time,1)
-                if (user_input_int == x[3] ):
+                if (user_input_int == x['answer'] ):
                     score += 1
                     win_print(w_feedback,"Answered correctly in {} seconds".format(seconds), 1)
-                    writer.writerow([datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S'),seconds,x[0],x[1],x[2],user_input,'Y'])
+                    writer.writerow([datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S'),seconds,x['num1'],x['operation'],x['num2'],user_input,'Y'])
                 else:
                     win_print(w_feedback,"Opps!  {} seconds".format(seconds), 1)
-                    writer.writerow([datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S'),seconds,x[0],x[1],x[2],user_input,'N'])
+                    writer.writerow([datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S'),seconds,x['num1'],x['operation'],x['num2'],user_input,'N'])
                 win_print(w_summary, "You got {} right out of {}/{} questions! {}% in {} seconds".format(score,questions_answered,q_limit,int(score/(questions_answered)*100), round(seconds_passed,1)), 1)
     w_hints.clear()
     w_hints.refresh()
